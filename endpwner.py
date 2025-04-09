@@ -63,7 +63,7 @@ def banner():
         ": :: ::   ::    :   :: :  :    :          :: :  : :    ::    :   : :: ::    :   : : ",
         "",
         "             \033[95m[ Endpwner v1.0 - API Bruteforcer & Security Scanner ]",
-        "                  by Caio Luchetti aka z0x41f",
+        "                  by Caio Luchetti aka cxiolz",
     ]
     hacker_typewriter(banner_lines)
 
