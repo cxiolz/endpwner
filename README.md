@@ -6,6 +6,42 @@ Ideal para fase de *recon* ou durante pentests de APIs.
 
 ---
 
+
+## 🚀 Features
+
+- 🔥 Brute-force de endpoints com wordlist
+- 🛡️ Avaliação de headers de segurança (7 principais)
+- 📊 Exporta resultado em CSV (compatível com Excel)
+- 🧠 Ranking de segurança estilo CVSS (A+ até F)
+- ⚡ Interface colorida com Rich
+
+---
+
+## 🧠 Avaliação de Segurança (Ranking)
+
+O ranking é baseado na presença dos **headers de segurança** abaixo:
+
+- `Content-Security-Policy`
+- `Strict-Transport-Security`
+- `X-Content-Type-Options`
+- `X-Frame-Options`
+- `X-XSS-Protection`
+- `Referrer-Policy`
+- `Permissions-Policy`
+
+### 🎯 Classificação dos endpoints:
+
+| Headers Presentes | Nota            |
+|-------------------|-----------------|
+| 7                 | `A+ - Excelente`|
+| 5-6               | `A - Alto`      |
+| 3-4               | `B - Médio`     |
+| 1-2               | `C - Baixo`     |
+| 0                 | `F - Nenhum`    |
+
+---
+
+
 ## 🚀 Demonstração no terminal
 
 ```bash
@@ -18,15 +54,22 @@ $ python endpwner.py -u https://api.alvo.com -w wordlist.txt
 | |___| | | | (_| | |_) \ V  V /| | | |  __/ |   
 |_____|_| |_|\__,_| .__/ \_/\_/ |_| |_|\___|_|   
                   |_|                            
+    Endpoint Wordlist Bruteforcer - By Caio Luchetti
+EndPwner rodando em: https://example.com/
+Escaneando endpoints... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+     EndPwner - Resultados do Scanner de API      
+┏━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Endpoint     ┃ Status ┃ Tempo (s) ┃ Segurança  ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ /            │ 200    │ 0.27      │ F - Nenhum │
+│ /login       │ 404    │ 0.32      │ D - Fraco  │
+│ /api/users   │ 404    │ 0.26      │ D - Fraco  │
+│ /admin/panel │ 404    │ 0.34      │ D - Fraco  │
+│ /status      │ 404    │ 5.35      │ D - Fraco  │
+└──────────────┴────────┴───────────┴────────────┘
 
-┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┓
-┃ Endpoint   ┃ Status   ┃ Tempo (s) ┃
-┡━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━┩
-│ /admin     │ 200      │ 0.13      │
-│ /login     │ 401      │ 0.11      │
-│ /debug     │ 403      │ 0.10      │
-│ /secret    │ 404      │ 0.09      │
-└────────────┴──────────┴───────────┘
+Scan finalizado. Resultados salvos em: resultados.csv
+
 ```
 
 ---
