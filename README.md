@@ -47,28 +47,34 @@ O ranking é baseado na presença dos **headers de segurança** abaixo:
 ```bash
 $ python endpwner.py -u https://api.alvo.com -w wordlist.txt
 
+@@@@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@  @@@  @@@  @@@  @@@  @@@@@@@@  @@@@@@@  
+@@@@@@@^[[B@  @@@@ @@@  @@@@@@@@  @@@@@@@@  @@@  @@@  @@@  @@@@ @@@  @@@@@@@@  @@@@@@@@ 
+@@!       @@!@!@@@  @@!  @@@  @@!  @@@  @@!  @@!  @@!  @@!@!@@@  @@!       @@!  @@@ 
+!@!       !@!!@!@!  !@!  @!@  !@!  @!@  !@!  !@!  !@!  !@!!@!@!  !@!       !@!  @!@ 
+@!!!:!    @!@ !!@!  @!@  !@!  @!@@!@!   @!!  !!@  @!@  @!@ !!@!  @!!!:!    @!@!!@!  
+!!!!!:    !@!  !!!  !@!  !!!  !!@!!!    !@!  !!!  !@!  !@!  !!!  !!!!!:    !!@!@!   
+!!:       !!:  !!!  !!:  !!!  !!:       !!:  !!:  !!:  !!:  !!!  !!:       !!: :!!  
+:!:       :!:  !:!  :!:  !:!  :!:       :!:  :!:  :!:  :!:  !:!  :!:       :!:  !:! 
+ :: ::::   ::   ::   :::: ::   ::        :::: :: :::    ::   ::   :: ::::  ::   ::: 
+: :: ::   ::    :   :: :  :    :          :: :  : :    ::    :   : :: ::    :   : : 
 
- _____           _                               
-| ____|_ __   __| |_ ____      ___ __   ___ _ __ 
-|  _| | '_ \ / _` | '_ \ \ /\ / / '_ \ / _ \ '__|
-| |___| | | | (_| | |_) \ V  V /| | | |  __/ |   
-|_____|_| |_|\__,_| .__/ \_/\_/ |_| |_|\___|_|   
-                  |_|                            
-    Endpoint Wordlist Bruteforcer - By Caio Luchetti
+             [ Endpwner v1.0 - API Bruteforcer & Security Scanner ]
+                  by Caio Luchetti aka cxiolz
 EndPwner rodando em: https://example.com/
-Escaneando endpoints... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+Escaneando endpoints... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:50
      EndPwner - Resultados do Scanner de API      
 ┏━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┓
 ┃ Endpoint     ┃ Status ┃ Tempo (s) ┃ Segurança  ┃
 ┡━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━╇━━━━━━━━━━━━┩
-│ /            │ 200    │ 0.27      │ F - Nenhum │
-│ /login       │ 404    │ 0.32      │ D - Fraco  │
-│ /api/users   │ 404    │ 0.26      │ D - Fraco  │
-│ /admin/panel │ 404    │ 0.34      │ D - Fraco  │
-│ /status      │ 404    │ 5.35      │ D - Fraco  │
+│ /            │ ERR    │ -         │ F - Nenhum │
+│ /login       │ 404    │ 5.14      │ D - Fraco  │
+│ /api/users   │ 404    │ 10.12     │ D - Fraco  │
+│ /admin/panel │ 404    │ 0.13      │ D - Fraco  │
+│ /status      │ 404    │ 0.12      │ D - Fraco  │
 └──────────────┴────────┴───────────┴────────────┘
 
 Scan finalizado. Resultados salvos em: resultados.csv
+
 
 ```
 
