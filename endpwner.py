@@ -10,6 +10,8 @@
 
 # Desenvolvido por Caio Luchetti (@cxiolz)
 
+import warnings
+warnings.filterwarnings("ignore", category=SyntaxWarning)
 import requests
 import argparse
 import csv
