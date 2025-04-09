@@ -11,15 +11,13 @@ Ideal para fase de *recon* ou durante pentests de APIs.
 ```bash
 $ python endpwner.py -u https://api.alvo.com -w wordlist.txt
 
-  ______           _ _____                          
- |  ____|         | |  __ \                         
- | |__   _ __   __| | |__) |__  _ __ __ _ _ __ _   _ 
- |  __| | '_ \ / _` |  ___/ _ \| '__/ _` | '__| | | |
- | |____| | | | (_| | |  | (_) | | | (_| | |  | |_| |
- |______|_| |_|\__,_|_|   \___/|_|  \__,_|_|   \__, |
-                                               __/ |
-                                              |___/   v1.0
-                                                   EndPwner
+
+ _____           _                               
+| ____|_ __   __| |_ ____      ___ __   ___ _ __ 
+|  _| | '_ \ / _` | '_ \ \ /\ / / '_ \ / _ \ '__|
+| |___| | | | (_| | |_) \ V  V /| | | |  __/ |   
+|_____|_| |_|\__,_| .__/ \_/\_/ |_| |_|\___|_|   
+                  |_|                            
 
 ┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┓
 ┃ Endpoint   ┃ Status   ┃ Tempo (s) ┃
@@ -94,8 +92,8 @@ pip install -r requirements.txt
 ## 👨‍💻 Autor
 
 **Caio Luchetti**  
-🔗 [LinkedIn](https://www.linkedin.com/in/caiohacker)  
-🐙 GitHub: [@caiohacker](https://github.com/caiohacker)
+🔗 [LinkedIn](https://www.linkedin.com/in/caio-luchetti/)  
+🐙 GitHub: [@cxiolz](https://github.com/cxiolz)
 
 ---
 
