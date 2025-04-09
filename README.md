@@ -83,7 +83,7 @@ Scan finalizado. Resultados salvos em: resultados.csv
 ## 📦 Instalação
 
 ```bash
-git clone https://github.com/seuusuario/endpwner.git
+git clone https://github.com/cxiolz/endpwner.git
 cd endpwner
 pip install -r requirements.txt
 ```
