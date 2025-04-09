@@ -49,6 +49,6 @@ A ferramenta checa os seguintes headers de segurança (padrão OWASP + boas prá
 ## 🛠️ Instalação
 
 ```bash
-git clone https://github.com/seuuser/endpwner.git
+git clone https://github.com/cxiolz/endpwner.git
 cd endpwner
 pip install -r requirements.txt
