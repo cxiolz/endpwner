@@ -1,54 +1,104 @@
-# 🛡️ EndPwner – API Recon & Header Scanner
+# EndPwner 🔥
 
-**EndPwner** é uma ferramenta de segurança ofensiva focada em escaneamento de endpoints REST e análise de headers HTTP.  
-Foi criada para apoiar atividades de reconhecimento, mapeamento de superfície de ataque e identificação de falhas de configuração em APIs.
-
-Desenvolvida com foco em simplicidade, performance e clareza na visualização dos dados, é uma ótima adição para qualquer profissional de **Pentest**, **AppSec**, **Red Team** ou entusiasta de **bug bounty**.
-
----
-
-## 📌 Funcionalidades
-
-- 🔍 Escaneia endpoints via requisições HTTP `GET`
-- ⏱️ Mede tempo de resposta de cada rota
-- 🔐 Verifica presença de **headers de segurança**
-- 📄 Exporta resultados em **CSV**
-- 💡 Visualização colorida com **Rich** no terminal
-- 🧩 Leitura de wordlists customizadas
-- 🛑 Tolerante a erros de rede e timeouts
+**Scanner de Endpoints para APIs REST — rápido, flexível e simples.**  
+Ferramenta desenvolvida para ajudar profissionais de segurança na enumeração de endpoints expostos em aplicações web.  
+Ideal para fase de *recon* ou durante pentests de APIs.
 
 ---
 
-## 🧠 Motivação
-
-Durante testes de segurança, muitas APIs expõem rotas sensíveis ou desprotegidas.  
-O EndPwner surgiu da necessidade de:
-
-- Automatizar o reconhecimento de endpoints
-- Coletar evidências rápidas de falhas em headers
-- Avaliar comportamento da aplicação com base nos códigos de resposta
-
----
-
-## 🔐 Headers Avaliados
-
-A ferramenta checa os seguintes headers de segurança (padrão OWASP + boas práticas modernas):
-
-| Header                     | Descrição |
-|---------------------------|-----------|
-| Content-Security-Policy   | Mitiga ataques XSS e injeções de conteúdo |
-| Strict-Transport-Security | Força conexões HTTPS |
-| X-Content-Type-Options    | Bloqueia MIME sniffing |
-| X-Frame-Options           | Previne clickjacking |
-| X-XSS-Protection          | Proteção básica contra XSS |
-| Referrer-Policy           | Controla envio de referers entre sites |
-| Permissions-Policy        | Gerencia acesso a funcionalidades como câmera, microfone etc |
-
----
-
-## 🛠️ Instalação
+## 🚀 Demonstração no terminal
 
 ```bash
-git clone https://github.com/cxiolz/endpwner.git
+$ python endpwner.py -u https://api.alvo.com -w wordlist.txt
+
+  ______           _ _____                          
+ |  ____|         | |  __ \                         
+ | |__   _ __   __| | |__) |__  _ __ __ _ _ __ _   _ 
+ |  __| | '_ \ / _` |  ___/ _ \| '__/ _` | '__| | | |
+ | |____| | | | (_| | |  | (_) | | | (_| | |  | |_| |
+ |______|_| |_|\__,_|_|   \___/|_|  \__,_|_|   \__, |
+                                               __/ |
+                                              |___/   v1.0
+                                                   EndPwner
+
+┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Endpoint   ┃ Status   ┃ Tempo (s) ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━┩
+│ /admin     │ 200      │ 0.13      │
+│ /login     │ 401      │ 0.11      │
+│ /debug     │ 403      │ 0.10      │
+│ /secret    │ 404      │ 0.09      │
+└────────────┴──────────┴───────────┘
+```
+
+---
+
+## 📦 Instalação
+
+```bash
+git clone https://github.com/seuusuario/endpwner.git
 cd endpwner
 pip install -r requirements.txt
+```
+
+---
+
+## 🛠️ Como usar
+
+```bash
+python endpwner.py -u <URL da API> -w <wordlist.txt> [-t TIMEOUT] [-o output.csv]
+```
+
+- `-u`, `--url`: URL base da API alvo  
+- `-w`, `--wordlist`: arquivo com lista de endpoints para testar  
+- `-t`, `--timeout`: (opcional) timeout de cada request (default: 5s)  
+- `-o`, `--output`: (opcional) nome do arquivo CSV de saída (default: resultados.csv)
+
+---
+
+## 📁 Exemplo de uso
+
+```bash
+python endpwner.py -u https://api.exemplo.com -w wordlist.txt -t 3 -o resultado.csv
+```
+
+---
+
+## 📄 Output
+
+Um arquivo `.csv` contendo:
+
+```
+Endpoint,Status,Tempo (s)
+/admin,200,0.13
+/login,401,0.11
+/secret,404,0.09
+```
+
+---
+
+## 🤖 Requisitos
+
+- Python 3.7+
+- rich
+- requests
+
+Instalável via:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 👨‍💻 Autor
+
+**Caio Luchetti**  
+🔗 [LinkedIn](https://www.linkedin.com/in/caiohacker)  
+🐙 GitHub: [@caiohacker](https://github.com/caiohacker)
+
+---
+
+## 🧠 Licença
+
+MIT — Faça o que quiser, só não diga que foi você que fez 😎
