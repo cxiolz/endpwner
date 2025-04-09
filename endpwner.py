@@ -1,79 +1,152 @@
-import sys
-import time
-from colorama import Fore, Style, init
-
-init(autoreset=True)
-
-def typewriter(text, delay=0.01):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
-
-banner = f"""
-{Fore.RED}  ______           _ _____                          
- |  ____|         | |  __ \\                         
- | |__   _ __   __| | |__) |__  _ __ __ _ _ __ _   _ 
- |  __| | '_ \\ / _` |  ___/ _ \\| '__/ _` | '__| | | |
- | |____| | | | (_| | |  | (_) | | | (_| | |  | |_| |
- |______|_| |_|\\__,_|_|   \\___/|_|  \\__,_|_|   \\__, |
-                                              __/ |
-                                             |___/  v1.0
-{Style.BRIGHT}{Fore.CYAN}              Endpoint Wordlist Bruteforcer - By Caio Luchetti
-"""
-
-typewriter(banner, 0.002)
-
-# Desenvolvido por Caio Luchetti (@cxiolz)
-
-import warnings
-warnings.filterwarnings("ignore", category=SyntaxWarning)
+#!/usr/bin/env python3
 import requests
 import argparse
+import time
+import sys
+import os
+import random
 import csv
+from urllib.parse import urljoin
 from rich.console import Console
 from rich.table import Table
+from rich.progress import track
 
 console = Console()
 
-def scan_endpoints(base_url, wordlist, timeout, output_file):
-    table = Table(title="EndPwner - API Endpoint Scanner")
+SEC_HEADERS = [
+    'Content-Security-Policy',
+    'Strict-Transport-Security',
+    'X-Content-Type-Options',
+    'X-Frame-Options',
+    'X-XSS-Protection',
+    'Referrer-Policy',
+    'Permissions-Policy',
+]
 
-    table.add_column("Endpoint", style="cyan", no_wrap=True)
-    table.add_column("Status", style="magenta")
-    table.add_column("Tempo (s)", style="green")
+CVSS_SCORE_MAP = {
+    7: "A - Alto",
+    5: "B - Médio",
+    3: "C - Baixo",
+    1: "D - Fraco",
+    0: "F - Nenhum"
+}
 
-    results = []
+def hacker_typewriter(lines, min_delay=0.005, max_delay=0.01, beep=False):
+    for line in lines:
+        color = random.choice(["\033[91m", "\033[92m", "\033[96m", "\033[93m"])
+        sys.stdout.write(color)
+        for char in line:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(random.uniform(min_delay, max_delay))
+        sys.stdout.write("\n")
+        if beep:
+            sys.stdout.write("\a")
+            sys.stdout.flush()
+        time.sleep(0.05)
+    sys.stdout.write("\033[0m")  # Reset cor
 
-    with open(wordlist, "r") as f:
-        endpoints = [line.strip() for line in f.readlines() if line.strip()]
+def clear_screen():
+    os.system("clear")
 
-    for endpoint in endpoints:
-        url = f"{base_url.rstrip('/')}/{endpoint.lstrip('/')}"
-        try:
-            response = requests.get(url, timeout=timeout)
-            time = f"{response.elapsed.total_seconds():.2f}"
-            status = str(response.status_code)
-        except Exception as e:
-            status = "ERROR"
-            time = "-"
-        
-        table.add_row(endpoint, status, time)
-        results.append([endpoint, status, time])
+def banner():
+    banner_lines = [
+        "@@@@@@@@  @@@  @@@  @@@@@@@   @@@@@@@   @@@  @@@  @@@  @@@  @@@  @@@@@@@@  @@@@@@@  ",
+        "@@@@@@@@  @@@@ @@@  @@@@@@@@  @@@@@@@@  @@@  @@@  @@@  @@@@ @@@  @@@@@@@@  @@@@@@@@ ",
+        "@@!       @@!@!@@@  @@!  @@@  @@!  @@@  @@!  @@!  @@!  @@!@!@@@  @@!       @@!  @@@ ",
+        "!@!       !@!!@!@!  !@!  @!@  !@!  @!@  !@!  !@!  !@!  !@!!@!@!  !@!       !@!  @!@ ",
+        "@!!!:!    @!@ !!@!  @!@  !@!  @!@@!@!   @!!  !!@  @!@  @!@ !!@!  @!!!:!    @!@!!@!  ",
+        "!!!!!:    !@!  !!!  !@!  !!!  !!@!!!    !@!  !!!  !@!  !@!  !!!  !!!!!:    !!@!@!   ",
+        "!!:       !!:  !!!  !!:  !!!  !!:       !!:  !!:  !!:  !!:  !!!  !!:       !!: :!!  ",
+        ":!:       :!:  !:!  :!:  !:!  :!:       :!:  :!:  :!:  :!:  !:!  :!:       :!:  !:! ",
+        " :: ::::   ::   ::   :::: ::   ::        :::: :: :::    ::   ::   :: ::::  ::   ::: ",
+        ": :: ::   ::    :   :: :  :    :          :: :  : :    ::    :   : :: ::    :   : : ",
+        "",
+        "             \033[95m[ Endpwner v1.0 - API Bruteforcer & Security Scanner ]",
+        "                  by Caio Luchetti aka z0x41f",
+    ]
+    hacker_typewriter(banner_lines)
 
+def load_wordlist(path):
+    with open(path, 'r') as file:
+        return [line.strip() for line in file if line.strip() and not line.startswith('#')]
+
+def calculate_security_score(headers):
+    present = sum(1 for h in SEC_HEADERS if headers.get(h))
+    percent = (present / len(SEC_HEADERS)) * 10
+    if percent >= 9:
+        return "A+ - Excelente"
+    elif percent >= 7:
+        return "A - Alto"
+    elif percent >= 5:
+        return "B - Médio"
+    elif percent >= 3:
+        return "C - Baixo"
+    elif percent >= 1:
+        return "D - Fraco"
+    else:
+        return "F - Nenhum"
+
+def scan_endpoint(base_url, endpoint, timeout):
+    url = urljoin(base_url, endpoint)
+    try:
+        start = time.time()
+        response = requests.get(url, timeout=timeout)
+        elapsed = round(time.time() - start, 2)
+        status = response.status_code
+        headers = {h: response.headers.get(h, '') for h in SEC_HEADERS}
+        rank = calculate_security_score(headers)
+        return endpoint, status, elapsed, headers, rank
+    except requests.exceptions.RequestException:
+        return endpoint, 'ERR', '-', {}, "F - Nenhum"
+
+def save_results(results, output):
+    with open(output, 'w', newline='') as csvfile:
+        fieldnames = ['Endpoint', 'Status', 'Response Time (s)', 'Security Rank'] + SEC_HEADERS
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for res in results:
+            row = {
+                'Endpoint': res[0],
+                'Status': res[1],
+                'Response Time (s)': res[2],
+                'Security Rank': res[4]
+            }
+            row.update(res[3])
+            writer.writerow(row)
+
+def print_results(results):
+    table = Table(title="EndPwner - Resultados do Scanner de API")
+    table.add_column("Endpoint")
+    table.add_column("Status")
+    table.add_column("Tempo (s)")
+    table.add_column("Segurança")
+    for ep, status, t, _, rank in results:
+        table.add_row(ep, str(status), str(t), rank)
     console.print(table)
 
-    with open(output_file, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Endpoint", "Status", "Tempo (s)"])
-        writer.writerows(results)
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="EndPwner - API Header & Endpoint Scanner")
+def main():
+    clear_screen()
+    banner()
+    parser = argparse.ArgumentParser(description="[EndPwner] Scanner de endpoints e análise de headers de segurança em APIs REST")
     parser.add_argument("-u", "--url", required=True, help="URL base da API")
-    parser.add_argument("-w", "--wordlist", required=True, help="Arquivo com lista de endpoints")
-    parser.add_argument("-t", "--timeout", type=int, default=5, help="Timeout de requisições (default: 5s)")
-    parser.add_argument("-o", "--output", default="resultados.csv", help="Arquivo CSV de saída")
+    parser.add_argument("-w", "--wordlist", required=True, help="Caminho da wordlist de endpoints")
+    parser.add_argument("-t", "--timeout", type=int, default=5, help="Timeout em segundos (padrão: 5)")
+    parser.add_argument("-o", "--output", default="resultados.csv", help="Arquivo de saída (CSV)")
     args = parser.parse_args()
 
-    scan_endpoints(args.url, args.wordlist, args.timeout, args.output)
+    endpoints = load_wordlist(args.wordlist)
+    results = []
+
+    console.print(f"[bold cyan]EndPwner rodando em:[/] {args.url}")
+
+    for ep in track(endpoints, description="[green]Escaneando endpoints..."):
+        result = scan_endpoint(args.url, ep, args.timeout)
+        results.append(result)
+
+    print_results(results)
+    save_results(results, args.output)
+    console.print(f"\n[bold green]Scan finalizado. Resultados salvos em:[/] {args.output}")
+
+if __name__ == '__main__':
+    main()
