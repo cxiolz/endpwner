@@ -1,15 +1,28 @@
-banner = r'''
-  ______           _ _____                          
- |  ____|         | |  __ \                         
+import sys
+import time
+from colorama import Fore, Style, init
+
+init(autoreset=True)
+
+def typewriter(text, delay=0.01):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)
+
+banner = f"""
+{Fore.RED}  ______           _ _____                          
+ |  ____|         | |  __ \\                         
  | |__   _ __   __| | |__) |__  _ __ __ _ _ __ _   _ 
- |  __| | '_ \ / _` |  ___/ _ \| '__/ _` | '__| | | |
+ |  __| | '_ \\ / _` |  ___/ _ \\| '__/ _` | '__| | | |
  | |____| | | | (_| | |  | (_) | | | (_| | |  | |_| |
- |______|_| |_|\__,_|_|   \___/|_|  \__,_|_|   \__, |
-                                               __/ |
-                                              |___/  v1.0
-                                                 EndPwner
-'''
-print(banner)
+ |______|_| |_|\\__,_|_|   \\___/|_|  \\__,_|_|   \\__, |
+                                              __/ |
+                                             |___/  v1.0
+{Style.BRIGHT}{Fore.CYAN}              Endpoint Wordlist Bruteforcer - By Caio Luchetti
+"""
+
+typewriter(banner, 0.002)
 
 # Desenvolvido por Caio Luchetti (@cxiolz)
 
